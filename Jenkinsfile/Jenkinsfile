@@ -80,7 +80,7 @@ pipeline {
         //     steps {
         //         script{
         //              withCredentials([string(credentialsId: 'docker-cred', variable: 'dockerpwd')]) {
-        //                 sh "docker login -u harishnshetty -p ${dockerpwd}"
+        //                 sh "docker login -u thejas821 -p ${dockerpwd}"
         //                sh 'docker-scout quickview fs://.'
         //                sh 'docker-scout cves fs://.'
         //            }
@@ -94,7 +94,7 @@ pipeline {
                     script {
                         withCredentials([string(credentialsId: 'docker-cred', variable: 'dockerpwd')]) {
                             // Login to Docker Hub
-                            sh "docker login -u harishnshetty -p ${dockerpwd}"
+                            sh "docker login -u thejas821 -p ${dockerpwd}"
 
                             // Generate a quick overview and save it as a text file
                             sh "docker-scout quickview fs://. > quickview-report.txt"
@@ -119,7 +119,7 @@ pipeline {
             steps {
                 script {
 
-                    env.IMAGE_TAG = "harishnshetty/flipkart:${BUILD_NUMBER}"
+                    env.IMAGE_TAG = "thejas821/flipkart:${BUILD_NUMBER}"
                     
                     // Optional cleanup
                     sh "docker rmi -f flipkart ${env.IMAGE_TAG} || true"
@@ -137,7 +137,7 @@ pipeline {
     //         steps {
     //             script{
     //                 withCredentials([string(credentialsId: 'docker-cred', variable: 'dockerpwd')]) {
-    //                 sh "docker login -u harishnshetty -p ${dockerpwd}"
+    //                 sh "docker login -u thejas821 -p ${dockerpwd}"
     //                 sh 'docker-scout cves flipkart'
     //                 sh 'docker-scout recommendations flipkart'
     //             }
@@ -151,7 +151,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'docker-cred', variable: 'dockerpwd')]) {
                         // Login to Docker Hub
-                        sh "docker login -u harishnshetty -p ${dockerpwd}"
+                        sh "docker login -u thejas821 -p ${dockerpwd}"
 
                         // Run Docker Scout CVE scan and save output
                         // sh "docker-scout cves flipkart --format json > image-cves-report.json"
@@ -203,14 +203,14 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'docker-cred', variable: 'dockerpwd')]) {
-                        sh "docker login -u harishnshetty -p ${dockerpwd}"
+                        sh "docker login -u thejas821 -p ${dockerpwd}"
                         sh "docker tag flipkart ${env.IMAGE_TAG}"
                         sh "docker push ${env.IMAGE_TAG}"
 
                         // Also push latest
-                        sh "docker tag flipkart harishnshetty/flipkart:latest"
+                        sh "docker tag flipkart thejas821/flipkart:latest"
                         
-                        sh "docker push harishnshetty/flipkart:latest"
+                        sh "docker push thejas821/flipkart:latest"
                         sh "docker logout"
                     }
                 }
@@ -286,19 +286,19 @@ pipeline {
                 def buildUrl = "${env.BUILD_URL}"
 
                 // 🟢 Slack Notification
-                slackSend(
-                    channel: '#devsecops',
-                    color: COLOR_MAP[buildStatus],
-                    message: """*${buildStatus}:* Job *${env.JOB_NAME}* Build #${env.BUILD_NUMBER}
-                    👤 *Started by:* ${buildUser}
-                    🔗 *Build URL:* <${buildUrl}|Click Here for Details>"""
-                )
+                // slackSend(
+                //     channel: '#devsecops',
+                //     color: COLOR_MAP[buildStatus],
+                //     message: """*${buildStatus}:* Job *${env.JOB_NAME}* Build #${env.BUILD_NUMBER}
+                //     👤 *Started by:* ${buildUser}
+                //     🔗 *Build URL:* <${buildUrl}|Click Here for Details>"""
+                // )
 
                 // 📧 Email Notification
             emailext (
                 subject: "Pipeline ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-                    <p>Youtube Link :- https://www.youtube.com/@devopsHarishNShetty </p>                                     
+                    <p>Youtube Link :- https://www.youtube.com/@devopsthejas821 </p>                                     
                     <p>Flipkart DevSecops CICD pipeline status.</p>
                     <p>Project: ${env.JOB_NAME}</p>
                     <p>Build Number: ${env.BUILD_NUMBER}</p>
@@ -306,8 +306,8 @@ pipeline {
                     <p>Started by: ${buildUser}</p>
                     <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """,
-                to: 'harishn662@gmail.com',
-                from: 'harishn662@gmail.com',
+                to: 'thejas821@gmail.com',
+                from: 'thejas821@gmail.com',
                 mimeType: 'text/html',
                 attachmentsPattern: 'quickview-report.txt,cves-report.json,cves-report.txt,image-cves-report.json,image-cves-report.txt,image-recommendations.json,image-recommendations.txt,dependency-check-report.xml,zap_report.html,zap_report.json'
                     )  
