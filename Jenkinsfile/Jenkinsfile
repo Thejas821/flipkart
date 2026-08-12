@@ -309,7 +309,7 @@ pipeline {
                 to: 'thejas821@gmail.com',
                 from: 'thejas821@gmail.com',
                 mimeType: 'text/html',
-                attachmentsPattern: 'quickview-report.txt,cves-report.json,cves-report.txt,image-cves-report.json,image-cves-report.txt,image-recommendations.json,image-recommendations.txt,dependency-check-report.xml,zap_report.html,zap_report.json'
+                // attachmentsPattern: 'quickview-report.txt,cves-report.json,cves-report.txt,image-cves-report.json,image-cves-report.txt,image-recommendations.json,image-recommendations.txt,dependency-check-report.xml,zap_report.html,zap_report.json'
                     )  
 
             }
