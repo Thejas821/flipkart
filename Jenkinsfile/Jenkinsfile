@@ -266,54 +266,54 @@ pipeline {
                     }
                 }
             }
-            post {
-                always {
-                    echo '📦 Archiving ZAP scan reports...'
-                    archiveArtifacts artifacts: 'zap_report.html,zap_report.json', allowEmptyArchive: true
-                }
-            }
+            // post {
+            //     always {
+            //         echo '📦 Archiving ZAP scan reports...'
+            //         archiveArtifacts artifacts: 'zap_report.html,zap_report.json', allowEmptyArchive: true
+            //     }
+            // }
         }
 
 
     }
     
-    post {
-        always {
-            script {
-                // 🔹 Common values
-                def buildStatus = currentBuild.currentResult
-                def buildUser = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')[0]?.userId ?: 'GitHub User'
-                def buildUrl = "${env.BUILD_URL}"
+    // post {
+    //     always {
+    //         script {
+    //             // 🔹 Common values
+    //             def buildStatus = currentBuild.currentResult
+    //             def buildUser = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')[0]?.userId ?: 'GitHub User'
+    //             def buildUrl = "${env.BUILD_URL}"
 
-                // 🟢 Slack Notification
-                // slackSend(
-                //     channel: '#devsecops',
-                //     color: COLOR_MAP[buildStatus],
-                //     message: """*${buildStatus}:* Job *${env.JOB_NAME}* Build #${env.BUILD_NUMBER}
-                //     👤 *Started by:* ${buildUser}
-                //     🔗 *Build URL:* <${buildUrl}|Click Here for Details>"""
-                // )
+    //             // 🟢 Slack Notification
+    //             // slackSend(
+    //             //     channel: '#devsecops',
+    //             //     color: COLOR_MAP[buildStatus],
+    //             //     message: """*${buildStatus}:* Job *${env.JOB_NAME}* Build #${env.BUILD_NUMBER}
+    //             //     👤 *Started by:* ${buildUser}
+    //             //     🔗 *Build URL:* <${buildUrl}|Click Here for Details>"""
+    //             // )
 
-                // 📧 Email Notification
-            emailext (
-                subject: "Pipeline ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    <p>Youtube Link :- https://www.youtube.com/@devopsthejas821 </p>                                     
-                    <p>Flipkart DevSecops CICD pipeline status.</p>
-                    <p>Project: ${env.JOB_NAME}</p>
-                    <p>Build Number: ${env.BUILD_NUMBER}</p>
-                    <p>Build Status: ${buildStatus}</p>
-                    <p>Started by: ${buildUser}</p>
-                    <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                """,
-                to: 'thejas821@gmail.com',
-                from: 'thejas821@gmail.com',
-                mimeType: 'text/html',
-                // attachmentsPattern: 'quickview-report.txt,cves-report.json,cves-report.txt,image-cves-report.json,image-cves-report.txt,image-recommendations.json,image-recommendations.txt,dependency-check-report.xml,zap_report.html,zap_report.json'
-                    )  
+    //             // 📧 Email Notification
+    //         emailext (
+    //             subject: "Pipeline ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+    //             body: """
+    //                 <p>Youtube Link :- https://www.youtube.com/@devopsthejas821 </p>                                     
+    //                 <p>Flipkart DevSecops CICD pipeline status.</p>
+    //                 <p>Project: ${env.JOB_NAME}</p>
+    //                 <p>Build Number: ${env.BUILD_NUMBER}</p>
+    //                 <p>Build Status: ${buildStatus}</p>
+    //                 <p>Started by: ${buildUser}</p>
+    //                 <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+    //             """,
+    //             to: 'thejas821@gmail.com',
+    //             from: 'thejas821@gmail.com',
+    //             mimeType: 'text/html',
+    //             // attachmentsPattern: 'quickview-report.txt,cves-report.json,cves-report.txt,image-cves-report.json,image-cves-report.txt,image-recommendations.json,image-recommendations.txt,dependency-check-report.xml,zap_report.html,zap_report.json'
+    //                 )  
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
  }
